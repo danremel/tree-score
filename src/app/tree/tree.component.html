@@ -1,11 +1,23 @@
 <div>
   <div>
-    <p>Starting value goes here</p>
+    <label>Enter starting value:</label>
+    <input
+      type="number"
+      [(ngModel)]="rootValue">
+    <button
+      type="submit"
+      (click)="onSubmitRootVal()">
+      Submit
+    </button>
   </div>
-  <div>
-    <div *ngFor="let node of nodes">
-      <p>{{ node.previousValue }} + 1 = {{ node.leftValue }}</p>
-      <p>{{ node.previousValue }} + 2 = {{ node.rightValue }}</p>
+  <div *ngFor="let node of nodes; let i = index;">
+    <div>
+      <p (click)="onAddNode(node)">{{ node.value }}</p>
+      <div *ngIf="hasChildren">
+        <div *ngFor="let child of node.children">
+          <p (click)="onAddNode(child)">{{ child ? child.value : '' }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
