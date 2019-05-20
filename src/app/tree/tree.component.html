@@ -1,5 +1,11 @@
-<p>
-  tree works!
-</p>
-
-<app-node></app-node>
+<div>
+  <div>
+    <p>Starting value goes here</p>
+  </div>
+  <div>
+    <div *ngFor="let node of nodes">
+      <p>{{ node.previousValue }} + 1 = {{ node.leftValue }}</p>
+      <p>{{ node.previousValue }} + 2 = {{ node.rightValue }}</p>
+    </div>
+  </div>
+</div>
