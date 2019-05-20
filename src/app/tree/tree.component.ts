@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 import { Node } from '../shared/models/node.model';
 
@@ -7,25 +7,31 @@ import { Node } from '../shared/models/node.model';
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
-export class TreeComponent implements OnInit {
+export class TreeComponent implements OnInit, DoCheck {
   rootValue: number;
   hasChildren = false;
-  nodes: Node[] = [];
+  tree: Node = {
+      value: 5,
+      children: []
+    };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }
 
+  ngDoCheck() {
+    // this.traverse(this.tree, this.process);
+  }
+
   onSubmitRootVal() {
-    this.nodes[0] = {
+    this.tree[0] = {
       value: this.rootValue,
       children: []
     };
   }
 
   onAddNode(prevNode: Node) {
-    console.log('add hit');
     prevNode.children.push(
       {
         value: prevNode.value + 1,
@@ -37,7 +43,29 @@ export class TreeComponent implements OnInit {
       }
     );
     this.hasChildren = true;
-    console.log(this.nodes);
+    this.traverse(prevNode, this.process);
+    console.log(this.tree);
   }
+
+  process(key, value) {
+    console.log(this.tree[value]);
+    // this.tree[key] = value.value;
+  }
+
+  traverse(tree, func) {
+    const self = this;
+    for (const i in tree) {
+      if (tree) {
+        func.apply(this, [i, tree[i].value]);
+        if (tree[i] !== null && typeof (tree[i]) === 'object') {
+          // going one step down in the object tree!!
+          self.traverse(tree[i], func);
+        }
+      }
+    }
+  }
+
+
+
 
 }

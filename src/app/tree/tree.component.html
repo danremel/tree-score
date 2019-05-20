@@ -10,14 +10,10 @@
       Submit
     </button>
   </div>
-  <div *ngFor="let node of nodes; let i = index;">
+  <div>
     <div>
-      <p (click)="onAddNode(node)">{{ node.value }}</p>
-      <div *ngIf="hasChildren">
-        <div *ngFor="let child of node.children">
-          <p (click)="onAddNode(child)">{{ child ? child.value : '' }}</p>
-        </div>
-      </div>
+      <p>{{ tree.value }}</p>
+      <p (click)="onAddNode(child)" *ngFor="let child of tree.children">{{ child.value }}</p>
     </div>
   </div>
 </div>
